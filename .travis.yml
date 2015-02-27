@@ -1,0 +1,4 @@
+sudo: false
+language: rust
+script:
+  - cargo build --verbose && cargo test --verbose && rustdoc -L ./target/deps --test README.md
