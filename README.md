@@ -34,7 +34,7 @@ This comes in three libraries:
 - [`rust_mixin`](#rust_mixin) — use Rust to generate your code.
 - [`external_mixin`](#external_mixin) — use scripting languages like
   Python or Ruby to generate your code.
-- [`external_mixin_umbrella](#external_mixin_umbrella) — support
+- [`external_mixin_umbrella`](#external_mixin_umbrella) — support
   library, to keep the above DRY.
 
 ## Should I actually use these?
