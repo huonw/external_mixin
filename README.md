@@ -37,35 +37,6 @@ This comes in three libraries:
 - [`external_mixin_umbrella`](#external_mixin_umbrella) — support
   library, to keep the above DRY.
 
-## Should I actually use these?
-
-Probably not, this is me experimenting with
-[more](https://github.com/huonw/brainfuck_macros) language
-[plugins](https://github.com/huonw/fractran_macros). A more
-portable/usable way to do this sort of code-generation is via
-[a `Cargo` build script](http://doc.crates.io/build-script.html) plus
-the `include!` macro.
-
-Some downsides (not exhaustive):
-
-- the mixins like `python_mixin!` rely on having correctly-named
-  binaries in the user's path, and, e.g. "`python`" is sometimes
-  Python 2 and sometimes Python 3. Also, it's mean to require users to
-  have installed Python on Windows. (Build scripts only need a Cargo
-  and a Rust compiler, which the user is guaranteed to have if they're
-  trying to build your Rust code.)
-
-- errors in the generated code are hard to debug, although the macros
-  do try to give as useful error messages as possible e.g. file/line
-  numbers for errors in the code point as closely as possible to the
-  relevant part of the original string containing the source
-  (including working with editors' jump-to-error facilities). However,
-  the parsed Rust doesn't actually appear anywhere on disk or
-  otherwise, so you cannot easily see the full context when the
-  compiler complains (in contrast, a build script just generates a
-  normal file right in your file-system).
-
-
 ## Installation
 
 Both plugin crates are available on crates.io:
@@ -239,3 +210,47 @@ The top level item of this repository is a library designed to
 maximise the sharing of code between `external_mixin` and
 `rust_mixin`, so that their implementations are only 100 and 50 lines
 respectively.
+
+## All your questions... answered:
+
+## Should I actually use these?
+
+Probably not, this is me experimenting with
+[more](https://github.com/huonw/brainfuck_macros) language
+[plugins](https://github.com/huonw/fractran_macros). A more
+portable/usable way to do this sort of code-generation is via
+[a `Cargo` build script](http://doc.crates.io/build-script.html) plus
+the `include!` macro.
+
+Some downsides (not exhaustive):
+
+- the mixins like `python_mixin!` rely on having correctly-named
+  binaries in the user's path, and, e.g. "`python`" is sometimes
+  Python 2 and sometimes Python 3. Also, it's mean to require users to
+  have installed Python on Windows. (Build scripts only need a Cargo
+  and a Rust compiler, which the user is guaranteed to have if they're
+  trying to build your Rust code.)
+
+- errors in the generated code are hard to debug, although the macros
+  do try to give as useful error messages as possible e.g. file/line
+  numbers for errors in the code point as closely as possible to the
+  relevant part of the original string containing the source
+  (including working with editors' jump-to-error facilities). However,
+  the parsed Rust doesn't actually appear anywhere on disk or
+  otherwise, so you cannot easily see the full context when the
+  compiler complains (in contrast, a build script just generates a
+  normal file right in your file-system).
+
+### Why not use token trees, rather than strings?
+
+It doesn't work so well for the white-space sensitive languages, and
+the arbitrary other languages usable with `external_mixin` can have
+wildly different syntax to Rust, syntax that doesn't even tokenise as
+Rust, e.g. `'foo'` is a valid string in many scripting languages, but
+is an invalid character literal in Rust. Rust's `#`-delimited raw
+strings means that there is no escaping required (just add enough
+`#`s, usually one is all that is needed).
+
+For `rust_mixin!`, I thought consistency was nice, and it provides a
+distinction between the real program and the subprogram via syntax
+highlighting (having two `main`s in one file is confusing).
