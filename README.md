@@ -1,4 +1,4 @@
-# Mixins for Rust
+# Mixins for Rust with external code
 
 [![Build Status](https://travis-ci.org/huonw/external_mixin.png)](https://travis-ci.org/huonw/external_mixin)
 
