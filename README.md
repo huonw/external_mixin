@@ -37,6 +37,9 @@ This comes in three libraries:
 - [`external_mixin_umbrella`](#external_mixin_umbrella) — support
   library, to keep the above DRY.
 
+Don't miss the [Q&A session](#all-your-questions-answered) at the
+bottom.
+
 ## Installation
 
 Both plugin crates are available on crates.io:
