@@ -48,12 +48,12 @@ the `include!` macro.
 
 Some downsides (not exhaustive):
 
-- the mixins like `python_mixin!` relies on having correctly-named
-  binaries in the user's path, and, e.g. "`python`" is
-  sometimes Python 2 and sometimes Python 3 and it's mean to require
-  users to have installed Python on Windows. (Build scripts only need
-  a Cargo and a Rust compiler, which the user is guaranteed to have if
-  they're trying to build your Rust code.)
+- the mixins like `python_mixin!` rely on having correctly-named
+  binaries in the user's path, and, e.g. "`python`" is sometimes
+  Python 2 and sometimes Python 3. Also, it's mean to require users to
+  have installed Python on Windows. (Build scripts only need a Cargo
+  and a Rust compiler, which the user is guaranteed to have if they're
+  trying to build your Rust code.)
 
 - errors in the generated code are hard to debug, although the macros
   do try to give as useful error messages as possible e.g. file/line
@@ -99,6 +99,8 @@ The macro supports an optional `{ ... }` block before the string
 literal, to specify options. The only option supported currently is
 `arg`: it can be specified multiple times, and the arguments are
 passed to `rustc` in the order given.
+
+This doesn't currently support using any dependencies via `cargo`.
 
 ### Examples
 
