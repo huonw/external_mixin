@@ -1,15 +1,16 @@
-# Mixins for Rust with external code
+# `macro_rules!` with realer programming languages
 
 [![Build Status](https://travis-ci.org/huonw/external_mixin.png)](https://travis-ci.org/huonw/external_mixin)
 
-Write code in arbitrary languages, to write Rust code right into your
-crate.
+Generate Rust code right into your crate, with an arbitrary
+programming language.
 
 ```rust
 #![feature(plugin)]
 #![plugin(external_mixin)]
 #![plugin(rust_mixin)]
 
+// creates a `get_x` function
 python_mixin! {"
 x = 1 + 2
 print('fn get_x() -> u64 { %d }' % x)
@@ -18,6 +19,7 @@ print('fn get_x() -> u64 { %d }' % x)
 fn main() {
     let value = get_x();
 
+    // should evaluate to 7.
     let other_value = rust_mixin! {r#"
 fn main() {
     println!("{}", 3 + 4);
