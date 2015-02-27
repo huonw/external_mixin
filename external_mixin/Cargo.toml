@@ -1,0 +1,27 @@
+[package]
+
+name = "external_mixin"
+version = "0.0.1"
+authors = ["Huon Wilson <dbau.pp@gmail.com>"]
+
+homepage = "https://github.com/huonw/external_mixin"
+repository = "https://github.com/huonw/external_mixin"
+documentation = "https://github.com/huonw/external_mixin#external_mixin"
+license = "MIT/Apache-2.0"
+keywords = ["python", "ruby", "shell", "plugin", "code-generation"]
+readme = "../README.md"
+
+description = """
+Use your favourite interpreted language to generate your Rust, right
+in your Rust. Supports Python, Ruby and shell (`sh`) out of the box,
+with an extensible macro to support any others. (See `rust_mixin` to
+be able to use your all-time favourite language to generate your Rust.)
+"""
+
+[dependencies.external_mixin_umbrella]
+path = ".."
+version = "0"
+
+[lib]
+name = "external_mixin"
+plugin = true

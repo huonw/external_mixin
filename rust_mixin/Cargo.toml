@@ -1,0 +1,25 @@
+[package]
+
+name = "rust_mixin"
+version = "0.0.1"
+authors = ["Huon Wilson <dbau.pp@gmail.com>"]
+
+homepage = "https://github.com/huonw/external_mixin"
+repository = "https://github.com/huonw/external_mixin"
+documentation = "https://github.com/huonw/external_mixin#rust_mixin"
+license = "MIT/Apache-2.0"
+keywords = ["rust", "plugin", "code-generation"]
+readme = "../README.md"
+
+description = """
+Yo dawg, use Rust to generate Rust, right in your Rust. (See
+`external_mixin` to use scripting languages.)
+"""
+
+[dependencies.external_mixin_umbrella]
+path = ".."
+version = "0"
+
+[lib]
+name = "rust_mixin"
+plugin = true
