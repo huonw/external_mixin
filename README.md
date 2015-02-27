@@ -213,7 +213,7 @@ respectively.
 
 ## All your questions... answered:
 
-## Should I actually use these?
+### Should I actually use these?
 
 Probably not, this is me experimenting with
 [more](https://github.com/huonw/brainfuck_macros) language
