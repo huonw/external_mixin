@@ -200,6 +200,7 @@ Compute the Unix time that the program was built at, via Ruby.
 
 fn main() {
     let build_time = ruby_mixin!("puts Time.now.to_i");
+    println!("this was built {} seconds after 1970-01-01 00:00:00");
 }
 ```
 
