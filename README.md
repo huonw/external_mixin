@@ -261,3 +261,9 @@ strings means that there is no escaping required (just add enough
 For `rust_mixin!`, I thought consistency was nice, and it provides a
 distinction between the real program and the subprogram via syntax
 highlighting (having two `main`s in one file is confusing).
+
+### Wouldn't `rust_mixin` be better as compile-time function evaluation?
+
+Yeah, probably... but that's, like, type-safe and sensible, not nearly
+as much fun as munging strings around. (It also doesn't exist yet, in
+Rust.)
