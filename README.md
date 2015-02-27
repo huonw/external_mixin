@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/huonw/external_mixin.png)](https://travis-ci.org/huonw/external_mixin)
 
-Write code in arbitrary languages, to emit Rust code right in your
+Write code in arbitrary languages, to write Rust code right into your
 crate.
 
 ```rust
@@ -59,15 +59,16 @@ to your `Cargo.toml`.
 ## `rust_mixin`
 
 Write Rust to generate your Rust, right in your Rust (yo dawg). The
-plugin compiles and runs its argument as a Rust program, and then
-inserts the output into the main crate, similar to a `macro_rules!`
-macro.
+plugin compiles and runs its argument as a Rust program at compile
+time, and then inserts the output into the main crate, similar to a
+`macro_rules!` macro.
 
 The `rust_mixin` plugin takes a single string, containing a Rust
 program to be compiled with `rustc`. This program should print valid
 Rust to stdout. Each `rust_mixin` invocation is independent of all
-others. The string argument is macro-expanded before being used, so
-constructing an invocation with `concat!()` is legitimate.
+others (no stored state). The string argument is macro-expanded before
+being used, so constructing an invocation with `concat!()` is
+legitimate.
 
 The macro supports an optional `{ ... }` block before the string
 literal, to specify options. The only option supported currently is
@@ -128,23 +129,24 @@ fn main() {
 
 ## `external_mixin`
 
-Use a variety of scripting languages to generate Rust code. This has
-an `external_mixin!` macro that supports arbitrary interpreters, as
-well as specialise support for several languages: `python_mixin!`,
-`ruby_mixin!`, `sh_mixin!`, `perl_mixin!`.
+Use a variety of scripting languages to generate Rust code at compile
+time. This has an `external_mixin!` macro that supports arbitrary
+interpreters, as well as specialised support for several languages:
+`python_mixin!`, `ruby_mixin!`, `sh_mixin!`, `perl_mixin!`.
 
-As with `rust_mixin!` these macros take their program as a string that
-gets macro expanded, and each invocation is independent of all
-others. The program should print valid Rust to stdout. Options can be
-specified with an optional `{ ... }` block, before the string literal.
+As with `rust_mixin!` these macros take their program as a string
+(that gets macro expanded). The program should print valid Rust to
+stdout, and each invocation is independent, there's no stored
+state. Options can be specified with an optional `{ ... }` block,
+before the string literal.
 
 The `external_mixin!` macro is the most flexible form, it takes a
-compulsory `interpreter` argument: this program is called with a file
-containing the code snippet as the last argument.
+compulsory `interpreter` argument: this program is called with the
+path to a file containing the code snippet as the last argument.
 
 Both `external_mixin!` and the language specific macros support the
 `arg` option, which can be specified multiple times and are passed to
-the main binary, in the order given.
+the interpreter (in front of the file argument), in the order given.
 
 ### Portability?
 
