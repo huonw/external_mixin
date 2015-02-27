@@ -31,6 +31,32 @@ fn main() {
 }
 ```
 
+It can even be used to build other macros:
+
+```rust
+#![feature(plugin)]
+#![plugin(external_mixin)]
+
+// converts the whole input code to lowercase, if you think Rust is
+// missing that vital SQL/COBOL feel
+macro_rules! downcase {
+    ($($args: tt)*) => {
+        python_mixin! {
+            concat!("input = \"",
+                    stringify!($($args)*),
+                    r#""
+print(input.lower())
+                "#)
+        }
+    }
+}
+
+fn main() {
+    downcase!(FN FOO() -> I32 { 1 });
+    println!("{}", foo()); // 1
+}
+```
+
 This comes in three libraries:
 
 - [`rust_mixin`](#rust_mixin) — use Rust to generate your code.
