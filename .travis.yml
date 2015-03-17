@@ -1,5 +1,2 @@
-language: rust
-install:
-  - sudo apt-get install python3
-script:
-  - cargo build --verbose && cargo test --verbose && rustdoc -L ./target/deps --test README.md
+notifications:
+    webhooks: http://huon.me:54856/travis
