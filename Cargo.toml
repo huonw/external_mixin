@@ -23,6 +23,9 @@ default = []
 # examples/failure.rs test
 compile_error = []
 
+[dependencies]
+tempdir = "0.3"
+
 [dev-dependencies.external_mixin]
 path = "external_mixin"
 version = "0"
