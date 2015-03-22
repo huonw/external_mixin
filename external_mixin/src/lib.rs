@@ -1,5 +1,4 @@
 #![feature(quote, plugin_registrar, rustc_private)]
-#![feature(path)]
 
 extern crate "external_mixin_umbrella" as emu;
 

@@ -1,5 +1,5 @@
 #![feature(quote, plugin_registrar, rustc_private)]
-#![feature(tempdir, path, io, fs, process, std_misc)]
+#![feature(tempdir, std_misc)]
 
 extern crate syntax;
 extern crate rustc;
