@@ -8,8 +8,6 @@ use syntax::ptr::P;
 use syntax::ext::base::MacResult;
 use syntax::util::small_vector::SmallVector;
 
-use syntax::parse::attr::ParserAttr;
-
 pub struct ParserAnyMacro<'a> {
     parser: RefCell<Parser<'a>>,
 }
@@ -55,29 +53,21 @@ impl<'a> MacResult for ParserAnyMacro<'a> {
     }
     fn make_items(self: Box<ParserAnyMacro<'a>>) -> Option<SmallVector<P<ast::Item>>> {
         let mut ret = SmallVector::zero();
-        loop {
-            let mut parser = self.parser.borrow_mut();
-            // so... do outer attributes attached to the macro invocation
-            // just disappear? This question applies to make_methods, as
-            // well.
-            match parser.parse_item_with_outer_attributes() {
-                Some(item) => ret.push(item),
-                None => break
-            }
+        while let Some(item) = self.parser.borrow_mut().parse_item() {
+            ret.push(item);
         }
         self.ensure_complete_parse(false);
         Some(ret)
     }
 
-    fn make_methods(self: Box<ParserAnyMacro<'a>>) -> Option<SmallVector<P<ast::Method>>> {
+    fn make_impl_items(self: Box<ParserAnyMacro<'a>>)
+                       -> Option<SmallVector<P<ast::ImplItem>>> {
         let mut ret = SmallVector::zero();
         loop {
             let mut parser = self.parser.borrow_mut();
             match parser.token {
                 token::Eof => break,
-                _ => {
-                    ret.push(parser.parse_method_with_outer_attributes());
-                }
+                _ => ret.push(parser.parse_impl_item())
             }
         }
         self.ensure_complete_parse(false);
@@ -85,9 +75,8 @@ impl<'a> MacResult for ParserAnyMacro<'a> {
     }
 
     fn make_stmt(self: Box<ParserAnyMacro<'a>>) -> Option<P<ast::Stmt>> {
-        let attrs = self.parser.borrow_mut().parse_outer_attributes();
-        let ret = self.parser.borrow_mut().parse_stmt(attrs);
+        let ret = self.parser.borrow_mut().parse_stmt();
         self.ensure_complete_parse(true);
-        Some(ret)
+        ret
     }
 }
