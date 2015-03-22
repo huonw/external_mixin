@@ -95,7 +95,7 @@ impl<F> MixinExpander<F>
             name: name,
             dir: dir,
             expander: expander
-        }), None))
+        }), None, false))
     }
     fn handle(&self, cx: &ExtCtxt, sp: codemap::Span,
               output: Output) -> Result<Vec<u8>, ()> {
