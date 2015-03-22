@@ -1,13 +1,14 @@
 #![feature(quote, plugin_registrar, rustc_private)]
-#![feature(tempdir, path, io, fs, process, std_misc)]
+#![feature(std_misc)]
 
 extern crate syntax;
 extern crate rustc;
+extern crate tempdir;
 
 use std::collections::HashMap;
 use std::io;
 use std::io::prelude::*;
-use std::fs::{self, TempDir, File};
+use std::fs::{self, File};
 use std::path::{PathBuf, Path};
 use std::process;
 
@@ -17,6 +18,8 @@ use syntax::ext::base::{self, ExtCtxt, MacResult};
 use syntax::fold::Folder;
 use syntax::parse::{self, token};
 use rustc::plugin::Registry;
+
+use tempdir::TempDir;
 
 mod parser_any_macro;
 
@@ -95,7 +98,7 @@ impl<F> MixinExpander<F>
             name: name,
             dir: dir,
             expander: expander
-        }), None))
+        }), None, false))
     }
     fn handle(&self, cx: &ExtCtxt, sp: codemap::Span,
               output: Output) -> Result<Vec<u8>, ()> {
